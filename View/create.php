@@ -46,13 +46,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Form for creating a new product -->
     <form action="" method="POST">
         <label for="product_name">Product Name:</label><br>
-        <input type="text" id="product_name" name="product_name"><br>
+        <input type="text" id="product_name" name="product_name" required><br>
         <label for="price">Price:</label><br>
-        <input type="text" id="price" name="price"><br>
+        <input type="text" id="price" name="price" required><br>
         <label for="quantity">Quantity:</label><br>
-        <input type="text" id="quantity" name="quantity"><br>
+        <input type="text" id="quantity" name="quantity" required><br>
         <label for="description">Description:</label><br>
-        <textarea id="description" name="description"></textarea><br><br>
+        <textarea id="description" name="description" required></textarea><br><br>
         <input type="submit" value="Submit">
     </form>
 </body>

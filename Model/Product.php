@@ -4,7 +4,7 @@ include PROJECT_ROOT . '/Database/Database.php';
 class Product {
     private $db;
     private $table = 'products';
-    private $fillable = ['product_name', 'price', 'quantity', 'description'];
+    private $fillable = ['product_name', 'price', 'quantity', 'description', 'deleted_at'];
 
 
     public function __construct() {
@@ -37,12 +37,8 @@ class Product {
         return $this->db->delete($this->table, $id);
     }
 
-    public function deleteMultipleProducts($ids) {
-        return $this->db->deleteMultiple($this->table, $ids);
-    }
-
-    public function restoreData() {
-        return $this->db->restoreData($this->table);
+    public function getRestoreData() {
+        return $this->db->getRestoreData($this->table);
     }
 
     public function restoreProducts($ids) {

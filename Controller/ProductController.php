@@ -32,12 +32,8 @@ class ProductController {
         return $this->productModel->deleteProduct($id);
     }
 
-    public function deleteMultipleProducts($ids) {
-       return $this->productModel->deleteMultipleProducts($ids);
-    }
-
-    public function restoreData() {
-        return $this->productModel->restoreData();
+    public function getRestoreData() {
+        return $this->productModel->getRestoreData();
     }
 
     public function restore($ids) {

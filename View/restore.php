@@ -3,7 +3,7 @@ include '../Config/init.php';
 include PROJECT_ROOT . '/Controller/ProductController.php';
 $controller = new ProductController();
 
-$products = $controller->restoreData();
+$products = $controller->getRestoreData();
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['selected_products'])) {
@@ -45,14 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['selected_products'])) 
     <h2>Restore Deleted Products</h2>
     
     <a href="../index.php">Back To Product List</a>
-    <br>
-    <script>
-            function confirmRestore() {
-                return confirm('Apakah Anda yakin ingin me-Restore produk ini?');
-            }
-        </script>
+    <br><br>
         <form action="" method="POST" onsubmit="return confirmRestore()">
-        
+        <button type="submit">Restore Products</button>
+        <br><br>
+
             <table>
             <tr>
                 <th>No</th>
@@ -65,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['selected_products'])) 
             <?php if (count($products) > 0) : ?>
                 <?php $counter = 1 ?>
                 <?php foreach ($products as $product) : ?>
+
                     <tr>
                         <td><?php echo $counter ?></td>
                         <td><?php echo $product["product_name"] ?></td>
@@ -77,11 +75,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['selected_products'])) 
                     </tr>
                     <?php $counter++ ?>
                 <?php endforeach ?>
-                <tr>
-                    <td colspan="7">
-                        <button type="submit" class="delete-button">Restore Products</button>
-                    </td>
-                </tr>
             <?php else : ?>
                 <tr>
                     <td colspan="6">No deleted products found.</td>
@@ -89,6 +82,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['selected_products'])) 
             <?php endif ?>
             </table>
         </form>
+
+        <script>
+            function confirmRestore() {
+                return confirm('Are you sure to Restore this product?');
+            }
+        </script>
     
 </body>
 </html>
