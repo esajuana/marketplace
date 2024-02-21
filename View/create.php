@@ -19,32 +19,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // Validasi product name
     if (empty($product_name)) {
-        $productNameErr = "Product name is required.";
+        $productNameErr = "*Product name is required.";
     } else {
         $productName = $product_name;
     }
     
     // Validasi price harus berupa angka
     if (empty($price)) {
-        $priceErr = "Price is required.";
+        $priceErr = "*Price is required.";
     } elseif (!is_numeric($price)) {
-        $priceErr = "Price must be a numeric value.";
+        $priceErr = "*Price must be a numeric value.";
     } else {
         $price = $price;
     }
     
     // Validasi quantity harus berupa angka positif
     if (empty($quantity)) {
-        $quantityErr = "Quantity is required.";
+        $quantityErr = "*Quantity is required.";
     } elseif (!is_numeric($quantity) || $quantity <= 0) {
-        $quantityErr = "Quantity must be a positive integer.";
+        $quantityErr = "*Quantity must be a positive integer.";
     } else {
         $quantity = $quantity;
     }
     
     // Validasi description
     if (empty($description)) {
-        $descriptionErr = "Description is required.";
+        $descriptionErr = "*Description is required.";
     } else {
         $description = $description;
     }

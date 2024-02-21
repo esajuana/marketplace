@@ -59,8 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <a href="../index.php">Back To Product List</a>
     <br><br>
 
-    <form action="" method="POST" onsubmit="return confirmRestore()">
-        <button type="submit" name="restore" value="restore">Restore Products</button>
+    <form action="" method="POST">
+        <button type="submit" name="restore" value="restore" onclick="return confirmRestore()">Restore Products</button>
         <br><br>
 
         <table>
