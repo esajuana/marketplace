@@ -20,7 +20,12 @@ class Product {
     }
 
     public function createProduct($data) {
-        $filteredData = array_intersect_key($data, array_flip($this->fillable));
+        $filteredData = [];
+        foreach ($data as $key => $value) {
+            if (in_array($key, $this->fillable)) {
+                $filteredData[$key] = $value;
+            }
+        }
         return $this->db->create($this->table, $filteredData);
     }
     
@@ -35,6 +40,10 @@ class Product {
 
     public function deleteProduct($id) {
         return $this->db->delete($this->table, $id);
+    }
+
+    public function deletePermanentProduct($id) {
+        return $this->db->deletePermanent($this->table, $id);
     }
 
     public function getRestoreData() {

@@ -62,12 +62,12 @@ if(isset($_GET['id'])) {
 <body>
     <div class="container">
         <h2>Product Details</h2>
-        <a href='../index.php' class='back-link'>Back to Homepage</a>
+        <a href='../index.php' class='back-link'>Back to Product List</a>
         <?php if(isset($productDetails)) : ?>
             <table>
                 <tr><th>ID</th><td><?php echo $productDetails['id']; ?></td></tr>
                 <tr><th>Name</th><td><?php echo $productDetails['product_name']; ?></td></tr>
-                <tr><th>Price</th><td><?php echo 'Rp' . number_format($productDetails['price']) ?></td></tr>
+                <tr><th>Price</th><td><?php echo 'Rp ' . number_format($productDetails['price']) ?></td></tr>
                 <tr><th>Quantity</th><td><?php echo $productDetails['quantity']; ?></td></tr>
                 <tr><th>Description</th><td><?php echo $productDetails['description']; ?></td></tr>
             </table>

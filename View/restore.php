@@ -1,22 +1,34 @@
 <?php
-include '../Config/init.php';
-include PROJECT_ROOT . '/Controller/ProductController.php';
-$controller = new ProductController();
+include_once '../Config/init.php';
+include_once PROJECT_ROOT . '/Controller/ProductController.php';
 
+$controller = new ProductController();
 $products = $controller->getRestoreData();
+
 $message = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['selected_products'])) {
-    $productController = new ProductController();
-    $ids = $_POST['selected_products'];
-    if ($productController->restore($ids)) {
-        header("Location: ../View/restore.php?restore_data_success=1");
-        exit;
-    } else {
-        echo "Failed to restore products.";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['restore'])) {
+        if (isset($_POST['selected_products'])) {
+            $ids = $_POST['selected_products'];
+            if ($controller->restore($ids)) {
+                header("Location: restore.php?restore_data_success=1");
+                exit;
+            } else {
+                $message = "Failed to restore products.";
+            }
+        } else {
+            $message = "No products selected for recovery.";
+        }
+    } elseif (isset($_POST['delete_permanent'])) {
+        $id = $_POST['delete_permanent'];
+        if ($controller->deletePermanentProduct($id)) {
+            header("Location: restore.php?delete_permanent_success=1");
+            exit;
+        } else {
+            $message = "Failed to delete product permanently.";
+        }
     }
-} elseif ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['selected_products'])) {
-    $message = "No products selected for recovery."; 
 }
 ?>
 
@@ -46,11 +58,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['selected_products'])) 
     
     <a href="../index.php">Back To Product List</a>
     <br><br>
-        <form action="" method="POST" onsubmit="return confirmRestore()">
-        <button type="submit">Restore Products</button>
+
+    <form action="" method="POST" onsubmit="return confirmRestore()">
+        <button type="submit" name="restore" value="restore">Restore Products</button>
         <br><br>
 
-            <table>
+        <table>
             <tr>
                 <th>No</th>
                 <th>Product Name</th>
@@ -58,36 +71,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['selected_products'])) 
                 <th>Quantity</th>
                 <th>Description</th>
                 <th>Select</th>
+                <th>Delete Permanent</th>
             </tr>
             <?php if (count($products) > 0) : ?>
                 <?php $counter = 1 ?>
                 <?php foreach ($products as $product) : ?>
-
                     <tr>
                         <td><?php echo $counter ?></td>
                         <td><?php echo $product["product_name"] ?></td>
-                        <td><?php echo $product["price"] ?></td>
+                        <td><?php echo 'Rp. ' . number_format($product["price"])  ?></td>
                         <td><?php echo $product["quantity"] ?></td>
                         <td><?php echo $product["description"] ?></td>
                         <td>
                             <input type="checkbox" name="selected_products[]" value="<?php echo $product['id'] ?>">
+                        </td>
+                        <td>
+                            <button type="submit" name="delete_permanent" value="<?php echo $product['id'] ?>" onclick="return confirmDeletePermanent()">Delete Permanent</button>
                         </td>
                     </tr>
                     <?php $counter++ ?>
                 <?php endforeach ?>
             <?php else : ?>
                 <tr>
-                    <td colspan="6">No deleted products found.</td>
+                    <td colspan="7">No deleted products found.</td>
                 </tr>
             <?php endif ?>
-            </table>
-        </form>
+        </table>
+    </form>
 
-        <script>
-            function confirmRestore() {
-                return confirm('Are you sure to Restore this product?');
-            }
-        </script>
-    
+    <script>
+        function confirmRestore() {
+            return confirm('Are you sure you want to restore selected products?');
+        }
+
+        function confirmDeletePermanent() {
+            return confirm('Are you sure you want to permanently delete this product?');
+        }
+    </script>
 </body>
 </html>

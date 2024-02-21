@@ -32,6 +32,10 @@ class ProductController {
         return $this->productModel->deleteProduct($id);
     }
 
+    public function deletePermanentProduct($id) {
+        return $this->productModel->deletePermanentProduct($id);
+    }
+
     public function getRestoreData() {
         return $this->productModel->getRestoreData();
     }

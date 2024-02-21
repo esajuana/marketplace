@@ -97,6 +97,17 @@ class Database {
         }
     }
 
+    public function deletePermanent($table, $id) {
+        try {
+            $stmt = $this->conn->prepare("DELETE FROM $table WHERE id = :id");
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
     public function getRestoreData($table) {
         try {
             $stmt = $this->conn->query("SELECT * FROM $table WHERE deleted_at IS NOT NULL");
@@ -118,6 +129,7 @@ class Database {
             return false;
         }
     }
+
     
 }
 
